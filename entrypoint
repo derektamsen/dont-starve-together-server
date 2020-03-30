@@ -2,6 +2,8 @@
 
 set -eux
 
+mkdir -p /dstserver/dstserver_config/Cluster_1/Master
+
 cat << EOF > '/dstserver/dstserver_config/Cluster_1/Master/server.ini'
 [network]
 default_server_name = ${DST_DEFAULT_SERVER_NAME}
@@ -24,7 +26,7 @@ pause_when_empty = ${DST_PAUSE_WHEN_EMPTY}
 dedicated_lan_server = ${DST_DEDICATED_LAN_SERVER}
 EOF
 
-if [[ "${DST_CLUSTER_TOKEN}" != "" ]]; then
+if [ "${DST_CLUSTER_TOKEN}" != "" ]; then
   echo "${DST_CLUSTER_TOKEN}" > '/dstserver/dstserver_config/Cluster_1/Master/cluster_token.txt'
 fi
 
