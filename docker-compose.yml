@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  dstserver:
+    build: .
+    ports:
+      - "10999:10999/udp"
+    volumes:
+      - dstconfig:/dstserver/dstserver_config
+
+volumes:
+  dstconfig:
