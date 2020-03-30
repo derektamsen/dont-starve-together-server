@@ -11,7 +11,7 @@ RUN apt update \
 
 # install deps for dst server and fix libcurl-gnutls link
 RUN dpkg --add-architecture i386 \
-    && apt update && apt install -y libcurl3-gnutls:i386 \
+    && apt update && apt install -y tini libcurl3-gnutls:i386 \
     && apt autoremove -y \
     && apt-get clean \
     && ln -sf /usr/lib/libcurl.so.4 /usr/lib/libcurl-gnutls.so.4 \
@@ -25,3 +25,5 @@ RUN /home/steam/steamcmd/steamcmd.sh +login anonymous \
       +force_install_dir /home/steam/steamapps/DST \
       +app_update 343050 validate \
       +quit
+
+ENTRYPOINT ["tini", "--", "/home/steam/steamapps/DST/bin/dontstarve_dedicated_server_nullrenderer"]
