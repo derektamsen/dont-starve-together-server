@@ -4,6 +4,8 @@ services:
   dstserver:
     image: derektamsen/dont-starve-together-server:latest
     build: .
+    env_file:
+      - dstserver.env
     ports:
       - "10999:10999/udp"
     volumes:
