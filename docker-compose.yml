@@ -2,6 +2,7 @@ version: "3.7"
 
 services:
   dstserver:
+    image: derektamsen/dont-starve-together-server:latest
     build: .
     ports:
       - "10999:10999/udp"

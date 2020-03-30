@@ -13,7 +13,7 @@ ENV DST_DEFAULT_SERVER_NAME="A unique server name" \
     DST_SERVER_INTENTION="cooperative" \
     DST_ENABLE_SNAPSHOTS="true" \
     DST_ENABLE_AUTOSAVER="true" \
-    DST_TICK_RATE="30" \
+    DST_TICK_RATE="15" \
     DST_CONNECTION_TIMEOUT="8000" \
     DST_SERVER_SAVE_SLOT="1" \
     DST_VOTE_KICK_ENABLED="true" \
@@ -29,7 +29,9 @@ RUN apt update \
 
 # install deps for dst server and fix libcurl-gnutls link
 RUN dpkg --add-architecture i386 \
-    && apt update && apt install -y tini libcurl3-gnutls:i386 \
+    && apt update && apt install -y --no-install-recommends \
+      tini \
+      libcurl3-gnutls:i386 \
     && apt autoremove -y \
     && apt-get clean \
     && ln -sf /usr/lib/libcurl.so.4 /usr/lib/libcurl-gnutls.so.4 \

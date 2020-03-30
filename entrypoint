@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -eux
+
 cat << EOF > '/dstserver/dstserver_config/Cluster_1/Master/server.ini'
 [network]
 default_server_name = ${DST_DEFAULT_SERVER_NAME}
@@ -22,11 +24,15 @@ pause_when_empty = ${DST_PAUSE_WHEN_EMPTY}
 dedicated_lan_server = ${DST_DEDICATED_LAN_SERVER}
 EOF
 
-cat << EOF > '/dstserver/dstserver_config/Cluster_1/Master/cluster_token.txt'
-${DST_CLUSTER_TOKEN}
-EOF
+if [[ "${DST_CLUSTER_TOKEN}" != "" ]]; then
+  echo "${DST_CLUSTER_TOKEN}" > '/dstserver/dstserver_config/Cluster_1/Master/cluster_token.txt'
+fi
 
 # Start Don't Starve Together Server
-/dstserver/bin/dontstarve_dedicated_server_nullrenderer \
+cd /dstserver/bin
+./dontstarve_dedicated_server_nullrenderer \
   -persistent_storage_root /dstserver \
-  -conf_dir dstserver_config
+  -conf_dir dstserver_config \
+  -cluster Cluster_1 \
+  -shard Master \
+  -bind_ip 0.0.0.0
