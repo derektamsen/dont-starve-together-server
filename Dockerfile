@@ -15,15 +15,18 @@ RUN dpkg --add-architecture i386 \
     && apt autoremove -y \
     && apt-get clean \
     && ln -sf /usr/lib/libcurl.so.4 /usr/lib/libcurl-gnutls.so.4 \
-    && ldconfig
+    && ldconfig \
+    && mkdir -p /dstserver/dstserver_config \
+    && chown steam:steam -R /dstserver
 
 USER steam
 WORKDIR /home/steam/steamcmd
 
 # install dont starve together server
 RUN /home/steam/steamcmd/steamcmd.sh +login anonymous \
-      +force_install_dir /home/steam/steamapps/DST \
+      +force_install_dir /dstserver \
       +app_update 343050 validate \
       +quit
 
-ENTRYPOINT ["tini", "--", "/home/steam/steamapps/DST/bin/dontstarve_dedicated_server_nullrenderer"]
+ENTRYPOINT ["tini", "--", "/dstserver/bin/dontstarve_dedicated_server_nullrenderer"]
+CMD [ "-persistent_storage_root", "/dstserver", "-conf_dir", "dstserver_config" ]
