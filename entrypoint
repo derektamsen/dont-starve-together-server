@@ -27,7 +27,7 @@ dedicated_lan_server = ${DST_DEDICATED_LAN_SERVER}
 EOF
 
 if [ "${DST_CLUSTER_TOKEN}" != "" ]; then
-  echo "${DST_CLUSTER_TOKEN}" > '/dstserver/dstserver_config/Cluster_1/Master/cluster_token.txt'
+  echo "${DST_CLUSTER_TOKEN}" > '/dstserver/dstserver_config/Cluster_1/cluster_token.txt'
 fi
 
 # Start Don't Starve Together Server
